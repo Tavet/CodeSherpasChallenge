@@ -1,3 +1,3 @@
 package com.github.tavet.codesherpaschallenge.model.dispenserSwitch
 
-class DispenserSwitchOffRequest(val sessionId: String)
+class DispenserSwitchRequest(val dispenserId: String)

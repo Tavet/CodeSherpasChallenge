@@ -20,7 +20,7 @@ class DispenserSwitchService(
 
     fun findByDispenserIdAndEndTimeIsNull(id: String?): Mono<DispenserSwitch> =
         dispenserSwitchRepository.findByDispenserIdAndEndTimeIsNull(id)
-            .switchIfEmpty { Mono.error(NotFoundException("Dispenser session with Dispenser ID $id not found")) }
+            .switchIfEmpty { Mono.error(NotFoundException("Dispenser service with Dispenser ID $id not found")) }
 
     fun switchDispenserOn(dispenser: Dispenser) = dispenserSwitchRepository.save(
         DispenserSwitch(

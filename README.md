@@ -14,9 +14,10 @@
 - Run project with Spring local profile: ```./gradlew bootRun --args='--spring.profiles.active=local'```
 - **Optional** If you would like to use a MongoDB GUI, this is the connection string: ```mongodb://root:password@localhost:27017```
 
-### cURL APIs
+### APIS
 Since there aren't API definitions in the challenge description as per 02 August 2023, I created the followings APIs:
 
+Please also check the Swagger Docs: http://localhost:8080/swagger-ui/index.html
 - Create Dispenser
 ```
 curl --request POST \

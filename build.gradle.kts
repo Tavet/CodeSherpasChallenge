@@ -30,6 +30,10 @@ dependencies {
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
 	implementation("org.springframework.boot:spring-boot-starter-validation")
 
+	// Docs
+	implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.1.0")
+	implementation("org.springdoc:springdoc-openapi-starter-webflux-ui:2.1.0")
+
 	// Reactive
 	implementation("org.springframework.boot:spring-boot-starter-data-mongodb-reactive")
 	implementation("org.springframework.boot:spring-boot-starter-webflux")
@@ -54,3 +58,41 @@ tasks.withType<KotlinCompile> {
 tasks.withType<Test> {
 	useJUnitPlatform()
 }
+/*
+
+val oasPackage = "com.github.tavet"
+val oasSpecLocation = "src/main/resources/dispenser-spec.yaml"
+val oasGenOutputDir = project.layout.buildDirectory.dir("generated-oas")
+
+tasks.register("generateServer", org.openapitools.generator.gradle.plugin.tasks.GenerateTask::class) {
+	input = project.file(oasSpecLocation).path
+	outputDir.set(oasGenOutputDir.get().toString())
+	modelPackage.set("$oasPackage.model")
+	apiPackage.set("$oasPackage.api")
+	packageName.set(oasPackage)
+	generatorName.set("kotlin-spring")
+	configOptions.set(
+		mapOf(
+			"dateLibrary" to "java8",
+			"interfaceOnly" to "true",
+			"useTags" to "true"
+		)
+	)
+}
+
+val clientOutput = project.layout.buildDirectory.dir("generated-oas-test")
+
+tasks.register("generateClient", org.openapitools.generator.gradle.plugin.tasks.GenerateTask::class) {
+	input = project.file(oasSpecLocation).path
+	outputDir.set(clientOutput.get().toString())
+	modelPackage.set("$oasPackage.client.model")
+	apiPackage.set("$oasPackage.client.api")
+	packageName.set(oasPackage)
+	generatorName.set("kotlin")
+	configOptions.set(
+		mapOf(
+			"dateLibrary" to "java8",
+			"useTags" to "true"
+		)
+	)
+}*/

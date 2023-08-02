@@ -3,7 +3,7 @@ package com.github.tavet.codesherpaschallenge.service
 import com.github.tavet.codesherpaschallenge.model.dispenser.Dispenser
 import com.github.tavet.codesherpaschallenge.model.dispenser.DispenserRequest
 import com.github.tavet.codesherpaschallenge.model.dispenser.StatusEnum
-import com.github.tavet.codesherpaschallenge.model.dispenserSwitch.DispenserSwitchOnRequest
+import com.github.tavet.codesherpaschallenge.model.dispenserSwitch.DispenserSwitchRequest
 import com.github.tavet.codesherpaschallenge.model.exception.DispenserSwitchException
 import com.github.tavet.codesherpaschallenge.model.exception.NotFoundException
 import com.github.tavet.codesherpaschallenge.repository.DispenserRepository
@@ -30,7 +30,7 @@ class DispenserService(
         )
     )
 
-    fun switchDispenser(request: DispenserSwitchOnRequest): Mono<Dispenser> = findById(request.dispenserId)
+    fun switchDispenser(request: DispenserSwitchRequest): Mono<Dispenser> = findById(request.dispenserId)
         .flatMap {
             if (StatusEnum.valueOf(it.status) == StatusEnum.ON) {
                 switchDispenserOff(it, request)
@@ -39,7 +39,7 @@ class DispenserService(
             }
         }
 
-    private fun switchDispenserOn(dispenser: Dispenser, request: DispenserSwitchOnRequest): Mono<Dispenser> {
+    private fun switchDispenserOn(dispenser: Dispenser, request: DispenserSwitchRequest): Mono<Dispenser> {
         return if (StatusEnum.valueOf(dispenser.status) == StatusEnum.ON) {
             Mono.error(DispenserSwitchException("The dispenser tap is already open"))
         } else {
@@ -53,7 +53,7 @@ class DispenserService(
         }
     }
 
-    private fun switchDispenserOff(dispenser: Dispenser, request: DispenserSwitchOnRequest): Mono<Dispenser> {
+    private fun switchDispenserOff(dispenser: Dispenser, request: DispenserSwitchRequest): Mono<Dispenser> {
         return if (StatusEnum.valueOf(dispenser.status) == StatusEnum.OFF) {
             Mono.error(DispenserSwitchException("The dispenser tap is already closed"))
         } else {
