@@ -30,33 +30,40 @@ class DispenserService(
         )
     )
 
-    fun switchDispenserOn(request: DispenserSwitchOnRequest) = findById(request.dispenserId)
+    fun switchDispenser(request: DispenserSwitchOnRequest): Mono<Dispenser> = findById(request.dispenserId)
         .flatMap {
             if (StatusEnum.valueOf(it.status) == StatusEnum.ON) {
-                Mono.error(DispenserSwitchException("The dispenser tap is already open"))
+                switchDispenserOff(it, request)
             } else {
-                dispenserRepository.save(
-                    it.apply {
-                        status = StatusEnum.ON.value
-                    }
-                ).doOnSuccess {
-                    dispenserSwitchService.switchDispenserOn(it).subscribe()
-                }
+                switchDispenserOn(it, request)
             }
         }
 
-    fun switchDispenserOff(request: DispenserSwitchOnRequest) = findById(request.dispenserId)
-        .flatMap {
-            if (StatusEnum.valueOf(it.status) == StatusEnum.OFF) {
-                Mono.error(DispenserSwitchException("The dispenser tap is already closed"))
-            } else {
-                dispenserRepository.save(
-                    it.apply {
-                        status = StatusEnum.OFF.value
-                    }
-                ).doOnSuccess {
-                    dispenserSwitchService.switchDispenserOff(it).subscribe()
+    private fun switchDispenserOn(dispenser: Dispenser, request: DispenserSwitchOnRequest): Mono<Dispenser> {
+        return if (StatusEnum.valueOf(dispenser.status) == StatusEnum.ON) {
+            Mono.error(DispenserSwitchException("The dispenser tap is already open"))
+        } else {
+            dispenserRepository.save(
+                dispenser.apply {
+                    status = StatusEnum.ON.value
                 }
+            ).doOnSuccess {
+                dispenserSwitchService.switchDispenserOn(it).subscribe()
             }
         }
+    }
+
+    private fun switchDispenserOff(dispenser: Dispenser, request: DispenserSwitchOnRequest): Mono<Dispenser> {
+        return if (StatusEnum.valueOf(dispenser.status) == StatusEnum.OFF) {
+            Mono.error(DispenserSwitchException("The dispenser tap is already closed"))
+        } else {
+            dispenserRepository.save(
+                dispenser.apply {
+                    status = StatusEnum.OFF.value
+                }
+            ).doOnSuccess {
+                dispenserSwitchService.switchDispenserOff(it).subscribe()
+            }
+        }
+    }
 }

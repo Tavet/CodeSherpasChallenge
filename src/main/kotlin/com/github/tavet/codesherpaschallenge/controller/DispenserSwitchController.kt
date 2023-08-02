@@ -5,16 +5,12 @@ import com.github.tavet.codesherpaschallenge.service.DispenserService
 import org.springframework.http.MediaType
 import org.springframework.web.bind.annotation.*
 
-@RequestMapping("/api/dispenser/session")
+@RequestMapping("/api/dispenser/switch")
 @RestController
 class DispenserSwitchController(private val dispenserService: DispenserService) {
 
-    @PatchMapping("/on", produces = [MediaType.APPLICATION_STREAM_JSON_VALUE], consumes = [MediaType.APPLICATION_JSON_VALUE])
+    @PatchMapping(produces = [MediaType.APPLICATION_STREAM_JSON_VALUE], consumes = [MediaType.APPLICATION_JSON_VALUE])
     fun dispenserSwitchOn(@RequestBody request: DispenserSwitchOnRequest) =
-        dispenserService.switchDispenserOn(request)
-
-    @PatchMapping("/off", produces = [MediaType.APPLICATION_STREAM_JSON_VALUE], consumes = [MediaType.APPLICATION_JSON_VALUE])
-    fun dispenserSwitchOff(@RequestBody request: DispenserSwitchOnRequest) =
-        dispenserService.switchDispenserOff(request)
+        dispenserService.switchDispenser(request)
 
 }

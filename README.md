@@ -1,5 +1,8 @@
 # Code Sherpas Beer Tap Dispenser
 
+### Notes
+- I have modified the API that creates a dispenser to receive an additional parameter pricePerLiter since it was not specified in the code challenge, so I made this assumption
+
 ### Requirements
 - Docker (Docker Compose v3.8)
 - Ensure the Database Mongodb port **27017** is free
@@ -20,32 +23,29 @@ curl --request POST \
   --url http://localhost:8080/api/dispenser \
   --header 'Content-Type: application/json' \
   --data '{
-  "flowVolume": "2.0"
-  }'
+	"flowVolume": "1",
+	"pricePerLiter": "0.55"
+}'
 ```
 
-- Get Dispenser
+- Get Dispenser Information
 ```
 curl --request GET \
 --url http://localhost:8080/api/dispenser/64ca8235d2ad5f1d23166ec2
 ```
 
-- Switch ON tap
- ```
-curl --request PATCH \
-  --url http://localhost:8080/api/dispenser/session/on \
-  --header 'Content-Type: application/json' \
-  --data '{
-  "dispenserId": "64caace74499e355a981120c"
-  }'
+- Get Reports
+```
+curl --request GET \
+  --url http://localhost:8080/api/dispenser/report
 ```
 
-- Switch OFF tap
+- Switch ON/OFF the dispenser tap
 ```
 curl --request PATCH \
-  --url http://localhost:8080/api/dispenser/session/off \
+  --url http://localhost:8080/api/dispenser/switch \
   --header 'Content-Type: application/json' \
   --data '{
-	"dispenserId": "64caace74499e355a981120c"
+	"dispenserId": "64cada2639d7750f97fc8798"
 }'
 ```
