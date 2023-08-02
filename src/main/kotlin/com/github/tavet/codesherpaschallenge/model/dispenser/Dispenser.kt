@@ -10,5 +10,6 @@ data class Dispenser(
     val id: String? = null,
     @Field("flow_volume")
     var flowVolume: Double,
+    var pricePerLiter: Double,
     var status: String
 )
