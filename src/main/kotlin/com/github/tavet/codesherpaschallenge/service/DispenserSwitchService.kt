@@ -5,6 +5,7 @@ import com.github.tavet.codesherpaschallenge.model.dispenserSwitch.DispenserSwit
 import com.github.tavet.codesherpaschallenge.model.exception.NotFoundException
 import com.github.tavet.codesherpaschallenge.repository.DispenserSwitchRepository
 import org.springframework.stereotype.Service
+import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
 import reactor.kotlin.core.publisher.switchIfEmpty
 import java.time.LocalDateTime
@@ -15,8 +16,7 @@ class DispenserSwitchService(
     private val dispenserSwitchRepository: DispenserSwitchRepository
 ) {
 
-    fun findById(id: String): Mono<DispenserSwitch> = dispenserSwitchRepository.findById(id)
-        .switchIfEmpty { Mono.error(NotFoundException("Dispenser session with ID $id not found")) }
+    fun findAll(dispenserId: String?): Flux<DispenserSwitch> = dispenserSwitchRepository.findByDispenserId(dispenserId)
 
     fun findByDispenserIdAndEndTimeIsNull(id: String?): Mono<DispenserSwitch> =
         dispenserSwitchRepository.findByDispenserIdAndEndTimeIsNull(id)

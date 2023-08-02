@@ -12,7 +12,7 @@
 - **Optional** If you would like to use a MongoDB GUI, this is the connection string: ```mongodb://root:password@localhost:27017```
 
 ### cURL APIs
-These can be run imported in Postman or Insomnia
+Since there aren't API definitions in the challenge description as per 02 August 2023, I created the followings APIs:
 
 - Create Dispenser
 ```
@@ -28,4 +28,24 @@ curl --request POST \
 ```
 curl --request GET \
 --url http://localhost:8080/api/dispenser/64ca8235d2ad5f1d23166ec2
+```
+
+- Switch ON tap
+ ```
+curl --request PATCH \
+  --url http://localhost:8080/api/dispenser/session/on \
+  --header 'Content-Type: application/json' \
+  --data '{
+  "dispenserId": "64caace74499e355a981120c"
+  }'
+```
+
+- Switch OFF tap
+```
+curl --request PATCH \
+  --url http://localhost:8080/api/dispenser/session/off \
+  --header 'Content-Type: application/json' \
+  --data '{
+	"dispenserId": "64caace74499e355a981120c"
+}'
 ```
