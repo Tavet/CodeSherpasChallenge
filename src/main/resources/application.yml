@@ -1,0 +1,11 @@
+# For production purposes, this must be completed with a key manager such as AWS KMS.
+mongodb:
+  host:
+  port:
+  username:
+  password:
+  db_name:
+
+server:
+  error:
+    include-message: always
