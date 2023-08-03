@@ -19,6 +19,11 @@ data class DispenserSwitch(
     var startTime: LocalDateTime? = null,
     var endTime: LocalDateTime? = null,
     @field:Schema(
+        description = "Total seconds the tap was opened",
+        example = "110"
+    )
+    var seconds: Long? = null,
+    @field:Schema(
         description = "Total amount of liters dispensed in the service",
         example = "100"
     )

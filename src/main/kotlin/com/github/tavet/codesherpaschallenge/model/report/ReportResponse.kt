@@ -14,6 +14,6 @@ class ReportResponse(
     val timesUsed: Int?,
     val secondsUsed: Long?,
     val litersDispensed: Double?,
-    val totalMoney: Double?,
+    val totalCost: Double?,
     val services: List<DispenserSwitch>?
 )

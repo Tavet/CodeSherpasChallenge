@@ -29,6 +29,7 @@ dependencies {
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
 	implementation("org.springframework.boot:spring-boot-starter-validation")
+	annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
 
 	// Docs
 	implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.1.0")
@@ -39,9 +40,6 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-webflux")
 	implementation("io.projectreactor.kotlin:reactor-kotlin-extensions")
 	implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor")
-
-
-	annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
 
 	// Test
 	testImplementation("io.projectreactor:reactor-test")
