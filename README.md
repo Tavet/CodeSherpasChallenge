@@ -3,6 +3,8 @@
 I opted for MongoDB Reactive because one of the main advantages over conventional SQL databases is that it allows you to perform operations without having to wait for previous operations to complete. 
 In addition, it provides a schema-free data model, which can be beneficial for handling diverse and complex data structures.
 
+Based on the previous information, I was thinking about having a real-time API that reports the consumption of every dispenser, but in the end I kept things simple by having non-blocking async APIs.
+
 Also, I choose Kotlin and SpringBoot because this combination results in efficient, scalable, and maintainable applications.
 ### Notes
 
