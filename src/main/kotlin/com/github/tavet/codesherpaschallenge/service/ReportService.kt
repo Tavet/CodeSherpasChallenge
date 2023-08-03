@@ -24,7 +24,7 @@ class ReportService(
     fun getDispenserReport(id: String): Mono<ReportResponse> =
         dispenserService.findById(id)
             .flatMap(this::generateReportForDispenser)
-            .switchIfEmpty(Mono.error(ReportException("There requested dispenser doesn't exist, hence reports are not available")))
+            .switchIfEmpty(Mono.error(ReportException("The requested dispenser doesn't exist, hence reports are not available")))
 
     private fun generateReportForDispenser(dispenser: Dispenser): Mono<ReportResponse> =
         dispenserSwitchService.findAll(dispenser.id)
@@ -68,5 +68,4 @@ class ReportService(
         }
         return DispenserSwitchMetrics(switch.seconds, switch.dispensed, switch.cost)
     }
-
 }

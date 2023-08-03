@@ -1,5 +1,9 @@
 # Code Sherpas Beer Tap Dispenser
 
+I opted for MongoDB Reactive because one of the main advantages over conventional SQL databases is that it allows you to perform operations without having to wait for previous operations to complete. 
+In addition, it provides a schema-free data model, which can be beneficial for handling diverse and complex data structures.
+
+Also, I choose Kotlin and SpringBoot because this combination results in efficient, scalable, and maintainable applications.
 ### Notes
 
 - I have modified the API that creates a dispenser to receive an additional parameter pricePerLiter since it was not
@@ -10,7 +14,7 @@
 - Docker (Docker Compose v3.8)
 - Ensure the Database Mongodb port **27017** is free
 - Ensure the API port **8080** is free
-- JDK 17
+- JDK > 17
 
 ### Set-up
 
