@@ -1,6 +1,7 @@
 package com.github.tavet.codesherpaschallenge.controller
 
 import com.github.tavet.codesherpaschallenge.model.dispenser.Dispenser
+import com.github.tavet.codesherpaschallenge.model.dispenser.DispenserResponse
 import com.github.tavet.codesherpaschallenge.model.dispenser.StatusEnum
 import com.github.tavet.codesherpaschallenge.model.dispenserSwitch.DispenserSwitchRequest
 import com.github.tavet.codesherpaschallenge.service.DispenserService
@@ -27,7 +28,7 @@ class DispenserSwitchControllerTest {
     @InjectMockKs
     lateinit var dispenserSwitchController: DispenserSwitchController
 
-    private lateinit var dispenser: Dispenser
+    private lateinit var dispenser: DispenserResponse
 
     @BeforeEach
     fun setup() {
@@ -36,7 +37,7 @@ class DispenserSwitchControllerTest {
         val pricePerLiter = 12.0
         val status = StatusEnum.ON.value
         dispenser =
-            Dispenser(id = dispenserId, flowVolume = flowVolume, pricePerLiter = pricePerLiter, status = status)
+            DispenserResponse(id = dispenserId, flowVolume = flowVolume, pricePerLiter = pricePerLiter, status = status)
 
         webTestClient = WebTestClient.bindToController(dispenserSwitchController).build()
     }

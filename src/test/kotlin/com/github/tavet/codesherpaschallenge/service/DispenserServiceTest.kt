@@ -90,55 +90,30 @@ class DispenserServiceTest {
     }
 
     @Test
-    fun `test switchDispenser when status is ON`() {
+    fun `findById should return Dispenser when dispenser exists`() {
         val dispenserId = "1"
-        val dispenser = Dispenser(
-            id = "1",
-            flowVolume = 10.0,
-            pricePerLiter = 5.0,
-            status = StatusEnum.ON.value
-        )
-        val dispenserSwitchRequest = DispenserSwitchRequest(dispenserId = dispenser.id!!)
+        val dispenser = Dispenser(dispenserId, 7.0, 3.5234324, StatusEnum.ON.value)
 
         every { dispenserRepository.findById(dispenserId) } returns Mono.just(dispenser)
-        every { dispenserSwitchService.switchDispenserOff(any()) } returns Mono.just(DispenserSwitch(startTime = LocalDateTime.now(), dispenser = dispenser))
-        every { dispenserRepository.save(any()) } returns Mono.just(dispenser)
 
-        val result = dispenserService.switchDispenser(dispenserSwitchRequest)
+        val result = dispenserService.findById(dispenserId)
 
         StepVerifier.create(result)
             .expectNext(dispenser)
             .verifyComplete()
-
-        verify { dispenserRepository.findById(dispenserId) }
-        verify { dispenserSwitchService.switchDispenserOff(any()) }
-        verify { dispenserRepository.save(any()) }
     }
 
     @Test
-    fun `test switchDispenser when status is OFF`() {
-        val dispenserId = "1"
-        val dispenser = Dispenser(
-            id = "1",
-            flowVolume = 10.0,
-            pricePerLiter = 5.0,
-            status = StatusEnum.OFF.value
-        )
-        val dispenserSwitchRequest = DispenserSwitchRequest(dispenserId = dispenser.id!!)
+    fun `findById should return NotFoundException when dispenser does not exist`() {
+        val dispenserId = "id"
 
-        every { dispenserRepository.findById(dispenserId) } returns Mono.just(dispenser)
-        every { dispenserSwitchService.switchDispenserOn(any()) } returns Mono.just(DispenserSwitch(startTime = LocalDateTime.now(), dispenser = dispenser))
-        every { dispenserRepository.save(any()) } returns Mono.just(dispenser)
+        every { dispenserRepository.findById(dispenserId) } returns Mono.empty()
 
-        val result = dispenserService.switchDispenser(dispenserSwitchRequest)
+        val result = dispenserService.findById(dispenserId)
 
         StepVerifier.create(result)
-            .expectNext(dispenser)
-            .verifyComplete()
-
-        verify { dispenserRepository.findById(dispenserId) }
-        verify { dispenserSwitchService.switchDispenserOn(any()) }
-        verify { dispenserRepository.save(any()) }
+            .expectError(NotFoundException::class.java)
+            .verify()
     }
 
     @Test
