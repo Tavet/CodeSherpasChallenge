@@ -1,0 +1,6 @@
+mongodb:
+  host: test
+  port: 123
+  username: test
+  password: test
+  db_name: test

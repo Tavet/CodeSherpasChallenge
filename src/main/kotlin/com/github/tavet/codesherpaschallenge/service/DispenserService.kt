@@ -33,13 +33,13 @@ class DispenserService(
     fun switchDispenser(request: DispenserSwitchRequest): Mono<Dispenser> = findById(request.dispenserId)
         .flatMap {
             if (StatusEnum.valueOf(it.status) == StatusEnum.ON) {
-                switchDispenserOff(it, request)
+                switchDispenserOff(it)
             } else {
-                switchDispenserOn(it, request)
+                switchDispenserOn(it)
             }
         }
 
-    private fun switchDispenserOn(dispenser: Dispenser, request: DispenserSwitchRequest): Mono<Dispenser> {
+    private fun switchDispenserOn(dispenser: Dispenser): Mono<Dispenser> {
         return if (StatusEnum.valueOf(dispenser.status) == StatusEnum.ON) {
             Mono.error(DispenserSwitchException("The dispenser tap is already open"))
         } else {
@@ -53,7 +53,7 @@ class DispenserService(
         }
     }
 
-    private fun switchDispenserOff(dispenser: Dispenser, request: DispenserSwitchRequest): Mono<Dispenser> {
+    private fun switchDispenserOff(dispenser: Dispenser): Mono<Dispenser> {
         return if (StatusEnum.valueOf(dispenser.status) == StatusEnum.OFF) {
             Mono.error(DispenserSwitchException("The dispenser tap is already closed"))
         } else {
